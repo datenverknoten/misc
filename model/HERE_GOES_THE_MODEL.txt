@@ -1,0 +1,2 @@
+# Training ausführen wie im beiliegenden Jupyter Notebook beschrieben. Das exportierte Modell dann in diesen Ordner verschieben.
+
