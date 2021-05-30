@@ -33,7 +33,7 @@ def doCluster():
     list_of_destils_str += "<ul>"
     matching_distills = destills[destills['Clusters'] == cluster[0]].reset_index()
     for i in range(0,len(matching_distills)):
-        if(matching_distills.at[i,'Outlier'] == 1):
+        if(matching_distills.at[i,'Outlier'] == -1):
             list_of_destils_str += '<li><b>'+str(matching_distills.at[i,'Distillery'])+'</b></li>'
         else:
             list_of_destils_str += '<li>'+str(matching_distills.at[i,'Distillery'])+'</li>'
