@@ -103,7 +103,9 @@
         var values = []
         // Alle eingegebenen Werte der Slider holen
         $(".tasteslider").each(function( index ) {
-            values.push(parseInt($(this).val()))
+            // Hier -1 da die Slider von 1 bis 5 gehen,
+            // die Daten im Clustering aber nur 0 bis 4
+            values.push(parseInt($(this).val())-1)
         })
         // Eingegebenen Werte der Slider als JSON
         var dict = {"values" : values};
