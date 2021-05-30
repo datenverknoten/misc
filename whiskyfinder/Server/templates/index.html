@@ -1,0 +1,126 @@
+<!doctype html>
+
+<html lang="de">
+<head>
+  <!-- Bolierplate HTML5 Code um Bootstrap und ein paar Eingabeelementen erweitert. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Dein Whisky Finder</title>
+  <meta name="description" content="Dein Whisky Finder">
+  <meta name="author" content="datenverknoten.de">
+
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <style>
+    ul {
+        /* Die Liste, in der das Ergebnis dargestellt wird, wird zentriert */
+        text-align: center;
+        list-style: inside;
+    }
+  </style>
+</head>
+<body>
+    <div class='container-fluid p-0'>
+        <div class='row'>
+            <!-- Bildquelle: pexels.com -->
+            <img src="{{url_for('static', filename='schottland.png')}}" />
+        </div>
+    </div>
+    <div class='container'>
+        <div class='row' style='text-align: center;'>
+            <h1>Dein Whisky Finder</h1>
+            <p class = 'lead'>Mit den Reglern kannst du deine liebste Geschmackskombination auswählen und wir finden einen passenden Whisky für dich.</p>
+            <p class = 'lead'>Wähle für jeden Geschmack, ob er geringer (linke Seite) oder dominanterer (rechte Seite) vorkommen soll.</p>
+        </div>
+        <div class='row'>
+            <!-- Dies ist der Bereich mit den Slidern -->
+            <div class='col-sm-12 col-lg-6 offset-lg-3' style='margin-bottom:25px'>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Body</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="bodySlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Sweetness</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="sweetnessSlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Smoky</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="smokySlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Medicinal</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="medicinalSlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Tobacco</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="tobaccoSlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Honey</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="honeySlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Spicy</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="spicySlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Winey</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="wineySlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Nutty</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="nuttySlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Malty</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="maltySlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Fruity</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="fruitySlider">
+                </div>
+                <div class="range">
+                    <label for="bodySlider" class="form-label">Floral</label>
+                    <input type="range" min="1" max="5" value="3" class="form-range tasteslider" id="floralSlider">
+                </div>
+            </div>
+            <button type="button" class="btn btn-success" id="findButton">Whisky finden</button>
+            <p class='lead' style='text-align: center;margin-top: 15px;'>Das Ergebnis finden Sie hier unten, nachdem Sie den Button geklickt haben.</p>
+            <div id = 'resultDiv' style='padding-bottom: 25px;padding-top: 25px;'>
+                <!-- Wird bei Antwort des AJAX requests gefüllt -->
+            </div>
+        </div>
+    </div>
+    
+</body>
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JS + Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script>
+    $("#findButton").click(function() {
+        var values = []
+        // Alle eingegebenen Werte der Slider holen
+        $(".tasteslider").each(function( index ) {
+            values.push(parseInt($(this).val()))
+        })
+        // Eingegebenen Werte der Slider als JSON
+        var dict = {"values" : values};
+        // AJAX
+        $.ajax({
+            url: "/doCluster",
+            type: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify(dict),
+            success: function(response) {
+                // Fülle den container
+                $("#resultDiv").html(response)
+            },
+            error: function () {
+                alert('Irgendwas ist schiefgegangen.')
+            }
+        })
+    })
+</script>
+</html>
