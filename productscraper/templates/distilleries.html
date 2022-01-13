@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+    <title>Whiskies overview</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <row style="display:block;margin-top:25px;">
+        <div class="col-12-sm col-md-10 col-4-lg" style="margin:auto">
+            <h1>Distilleries in the database</h1>
+            {{ dt | safe }}
+        </div>
+    </row>
+    <row style="display:block;margin-top:25px;">
+        <div class="col-12-sm col-md-10 col-4-lg" style="margin:auto">
+            <h2>Enter new distillery</h2>
+            <form action="insertdistillery" method="post">
+                <div class="form-group">
+                  <label for="distinput">Name</label>
+                  <input type="text" class="form-control" name="distinput">
+                </div>
+                <button type="submit" class="btn btn-primary">Add distillery</button>
+              </form>
+        </div>
+    </row>
+</body>
+<script>
+    $(document).ready( function () {
+        $('#dt').DataTable();
+    } );
+</script>
+</html>

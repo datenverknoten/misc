@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+    <title>Prices overview</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <row style="display:block;margin-top:25px;">
+        <div class="col-12-sm col-md-10 col-4-lg" style="margin:auto">
+            <h1>Prices in the database</h1>
+            {{ dt | safe }}
+        </div>
+    </row>
+</body>
+<script>
+    $(document).ready( function () {
+        $('#dt').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
+    } );
+</script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+    <title>Shop source fields overview</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <row style="display:block;margin-top:25px;">
+        <div class="col-12-sm col-md-10 col-4-lg" style="margin:auto">
+            <h1>Shop source fields in the database</h1>
+            {{ st | safe }}
+        </div>
+    </row>
+    <row style="display:block;margin-top:25px;">
+        <div class="col-12-sm col-md-10 col-4-lg" style="margin:auto">
+            <h2>Enter new shop source field</h2>
+            <form action="insertshopsourcefields" method="post">
+                
+                <div class="form-group">
+                    <label for="shopselect">Shop select</label>
+                    <select class="form-control" name="shopselect">
+                    {% for key,value in shopt.iterrows() %}
+                        <option value="{{ value['ID'] }}">{{ value['Name'] }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="combinationselect">Combination select</label>
+                    <select class="form-control" name="combinationselect">
+                    {% for key,value in sst.iterrows() %}
+                        <option value="{{ value['ID'] }}">{{ value['Combination'] }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Add new source</button>
+              </form>
+        </div>
+    </row>
+</body>
+<script>
+    $(document).ready( function () {
+        $('#st').DataTable();
+    } );
+</script>
+</html>

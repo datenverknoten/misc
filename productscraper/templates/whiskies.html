@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+    <title>Whiskies overview</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <row style="display:block;margin-top:25px;">
+        <div class="col-12-sm col-md-10 col-4-lg" style="margin:auto">
+            <h1>Whiskies in the database</h1>
+            {{ wt | safe }}
+        </div>
+    </row>
+    <row style="display:block;margin-top:25px;">
+        <div class="col-12-sm col-md-10 col-4-lg" style="margin:auto">
+            <h2>Add new whisky</h2>
+            <form action="insertwhisky" method="post">
+                <div class="form-group">
+                  <label for="distinput">Name</label>
+                  <input type="text" class="form-control" name="whisname">
+                </div>
+                <div class="form-group">
+                    <label for="distselect">Distillery</label>
+                    <select class="form-control" name="distselect">
+                    {% for key,value in dt.iterrows() %}
+                        <option value="{{ value['ID'] }}">{{ value['Name'] }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="distinput">Age</label>
+                    <input type="number" class="form-control" name="whisage">
+                </div>
+                <button type="submit" class="btn btn-primary">Add whisky</button>
+              </form>
+        </div>
+    </row>
+</body>
+<script>
+    $(document).ready( function () {
+        $('#wt').DataTable();
+    } );
+</script>
+</html>
