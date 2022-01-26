@@ -124,9 +124,9 @@ def startSync():
         container = supply.at[i,'Container']
 	    # only insert when conversion to float is possible
         doInsert = True
-        price = fetchPrice(address,field,fieldtype,container).replace(',','.')
+        price = fetchPrice(address,field,fieldtype,container)
         try:
-            f = float(price)
+            f = float(price.replace(',','.'))
         except:
             if(price == None):
                 desc = "The price to insert was none"
