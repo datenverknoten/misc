@@ -94,7 +94,7 @@ def fetchPrice(address,field,fieldtype,container):
         price = ''.join(i for i in pricetext if i.isdigit() or i == ',' or i == '.')
     except:
         return None
-    return price
+    return str(price).replace(',','.')
 
 def startSync():
     """
@@ -126,7 +126,7 @@ def startSync():
         doInsert = True
         price = fetchPrice(address,field,fieldtype,container)
         try:
-            f = float(price.replace(',','.'))
+            f = float(price)
         except:
             if(price == None):
                 desc = "The price to insert was none"
